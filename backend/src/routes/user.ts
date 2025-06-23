@@ -2,9 +2,29 @@ import { Hono } from 'hono';
 import { PrismaClient } from '@prisma/client/extension';
 import { withAccelerate } from '@prisma/extension-accelerate';
 
-const userRoute = new Hono();
+const userRoute = new Hono<{
+    Bindings : {
+        datasourceUrl : string
+    }
+}>();
 
-userRoute.post('/signup' , (c) => {
+userRoute.post('/signup' ,async (c) => {
+    
+    const prisma = new PrismaClient({
+    datasourceUrl : c.env.datasourceUrl,
+    }).$extends(withAccelerate());
+
+    const body = await c.req.json();
+
+    console.log(body);
+    
+    await prisma.user.create({
+        data : {
+            email : body.email,
+            password : body.password,
+        }
+    });
+
     return c.text("signup");
 });
 
