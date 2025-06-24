@@ -1,22 +1,67 @@
 import { Hono } from 'hono';
 import { PrismaClient } from '@prisma/client/edge';
 import { withAccelerate } from '@prisma/extension-accelerate';
-import { decode, sign, verify } from 'hono/jwt'
+import { sign, verify } from 'hono/jwt'
 
 const userRoute = new Hono<{
     Bindings : {
         DATABASE_URL : string,
         JWT_SECRET : string
+    },
+    Variables : {
+        userId : any
     }
 }>();
 
-userRoute.post('/signup' ,async (c) => {
+userRoute.use('/blog/*' , async(c , next) => {
+  try {
     
+    const header = c.req.header("Authorization") || "";
+
+    const token = header.split(" ")[1];
+
+    const response = await verify(token , c.env.JWT_SECRET);
+    
+    if (!response.id) {
+        c.status(401);
+		return c.json({ error: "unauthorized" });
+    }
+
+    c.set('userId' , response.id);
+    console.log(response.id);
+    
+    await next();
+
+  } catch (error) {
+
+        c.status(403);
+
+        return c.json({
+            error : "Invaild Token"
+        });
+  }  
+});
+
+userRoute.post('/signup' ,async (c) => {
+ try {
     const prisma = new PrismaClient({
     datasourceUrl : c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
     const body = await c.req.json();
+
+    const userFound = await prisma.user.findUnique({
+        where : {
+            email : body.email
+        }
+    });
+
+    if(userFound) {
+        c.status(403)
+        return c.json({
+            error : "Email Already Exists"
+        });
+    }
     
    const user =  await prisma.user.create({
         data : {
@@ -30,6 +75,13 @@ userRoute.post('/signup' ,async (c) => {
     return c.json({
         jwt : token
     });
+    
+ } catch (error) {
+    c.status(403)
+    return c.json({
+        error : "Internal server error"
+    });
+ }
 });
 
 userRoute.post('/signin' ,async (c) => {
@@ -42,7 +94,8 @@ userRoute.post('/signin' ,async (c) => {
 
     const user = await prisma.user.findUnique({
         where : {
-            email : body.email
+            email : body.email,
+            password : body.password
         }
     });
 
@@ -64,7 +117,7 @@ userRoute.post('/blog' , (c) => {
     return c.text("blog");
 });
 
-userRoute.put('/blo g' , (c) => {
+userRoute.put('/blog' , (c) => {
     return c.text("Update blog");
 });
 
