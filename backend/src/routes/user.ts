@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { PrismaClient } from '@prisma/client/edge';
 import { withAccelerate } from '@prisma/extension-accelerate';
-import { sign, verify } from 'hono/jwt'
+import { sign } from 'hono/jwt'
 
 const userRoute = new Hono<{
     Bindings : {
@@ -13,34 +13,6 @@ const userRoute = new Hono<{
     }
 }>();
 
-userRoute.use('/blog/*' , async(c , next) => {
-  try {
-    
-    const header = c.req.header("Authorization") || "";
-
-    const token = header.split(" ")[1];
-
-    const response = await verify(token , c.env.JWT_SECRET);
-    
-    if (!response.id) {
-        c.status(401);
-		return c.json({ error: "unauthorized" });
-    }
-
-    c.set('userId' , response.id);
-    console.log(response.id);
-    
-    await next();
-
-  } catch (error) {
-
-        c.status(403);
-
-        return c.json({
-            error : "Invaild Token"
-        });
-  }  
-});
 
 userRoute.post('/signup' ,async (c) => {
  try {
@@ -113,16 +85,5 @@ userRoute.post('/signin' ,async (c) => {
     });
 });
 
-userRoute.post('/blog' , (c) => {
-    return c.text("blog");
-});
-
-userRoute.put('/blog' , (c) => {
-    return c.text("Update blog");
-});
-
-userRoute.get('/blog/:id' , (c) => {    
-    return c.text("Get blog");
-});
 
 export default userRoute;
