@@ -4,6 +4,6 @@ import blogRoute from './routes/blog';
 const app = new Hono()
 
 app.route('/api/v1' , userRoute);
-app.route('/api/vi' , blogRoute);
+app.route('/api/v1' , blogRoute);
 
 export default app
