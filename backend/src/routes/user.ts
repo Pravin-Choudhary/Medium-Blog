@@ -5,26 +5,23 @@ import { sign } from 'hono/jwt'
 
 const userRoute = new Hono<{
     Bindings : {
-        DATABASE_URL : string,
-        JWT_SECRET : string
-    },
-    Variables : {
-        userId : any
+        DATABASE_URL : string;
+        JWT_SECRET : string;
     }
 }>();
 
 
 userRoute.post('/signup' ,async (c) => {
- try {
     const prisma = new PrismaClient({
     datasourceUrl : c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
+try {
     const body = await c.req.json();
-
     const userFound = await prisma.user.findUnique({
         where : {
-            email : body.email
+            email : body.email,
+            password : body.password
         }
     });
 
@@ -35,7 +32,7 @@ userRoute.post('/signup' ,async (c) => {
         });
     }
     
-   const user =  await prisma.user.create({
+    const user =  await prisma.user.create({
         data : {
             email : body.email,
             password : body.password,
@@ -48,22 +45,23 @@ userRoute.post('/signup' ,async (c) => {
         jwt : token
     });
     
- } catch (error) {
-    c.status(403)
-    return c.json({
-        error : "Internal server error"
-    });
+}catch (error) {
+        c.status(411);
+        return c.json({
+            error : "Incorrect creds!"
+        });
  }
 });
 
-userRoute.post('/signin' ,async (c) => {
 
+
+userRoute.post('/signin' ,async (c) => {
     const prisma = new PrismaClient({
     datasourceUrl : c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
+try {
     const body = await c.req.json();
-
     const user = await prisma.user.findUnique({
         where : {
             email : body.email,
@@ -74,7 +72,7 @@ userRoute.post('/signin' ,async (c) => {
     if(!user) {
         c.status(403);
         return c.json({
-            error : "User Not Found !"
+            error : "Incorrect creds!"
         });
     }
 
@@ -83,7 +81,15 @@ userRoute.post('/signin' ,async (c) => {
     return c.json({
         jwt : token
     });
+
+} catch (error) {
+    c.status(411);
+    return c.json({
+                error : "Something Went Wrong"
+            });
+}
 });
+
 
 
 export default userRoute;
