@@ -1,7 +1,9 @@
 import { Hono } from 'hono';
 import { PrismaClient } from '@prisma/client/edge';
 import { withAccelerate } from '@prisma/extension-accelerate';
-import { verify } from 'hono/jwt'
+import { verify } from 'hono/jwt';
+import { createBlogInput , updateBlogInput } from '@10xcode/medium-common';
+
 
 type JwtPayLoad = {
     id : number
@@ -34,7 +36,6 @@ blogRoute.use('/*' , async(c , next) => {
     await next();
 
   }catch(error) {
-
         c.status(403);
         return c.json({
             error : "Invaild Token"
@@ -49,6 +50,15 @@ blogRoute.post('/' , async (c) => {
 
 try {
     const body = await c.req.json();
+
+     const {success} = createBlogInput.safeParse(body);
+    
+        if(!success){
+            c.status(411);
+            return c.json({
+                message : "Invaild create Inputs"
+            });
+        }
 
     const blog = await prisma.post.create({
         data :  {
@@ -76,9 +86,19 @@ blogRoute.put('/' ,async (c) => {
     datasourceUrl : c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
-    const body = await c.req.json();
 
 try {
+    const body = await c.req.json();
+
+     const {success} = updateBlogInput.safeParse(body);
+    
+        if(!success){
+            c.status(411);
+            return c.json({
+                message : "Invaild update Inputs"
+            });
+        }
+        
     const updatedBlog = await prisma.post.update({
         where : {
             id : body.id
