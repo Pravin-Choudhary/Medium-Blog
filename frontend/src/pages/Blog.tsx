@@ -1,5 +1,5 @@
 
-export const Blog = () => {
+export const Blogs = () => {
     return <>
             blog
     </>
