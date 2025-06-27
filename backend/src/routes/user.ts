@@ -46,6 +46,7 @@ try {
         data : {
             email : body.email,
             password : body.password,
+            name : body.name
         }
     });
 
