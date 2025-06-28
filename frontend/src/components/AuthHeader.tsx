@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 export const AuthHeader = ({type} : {type : "signin" | "signup"}) => {
     return <>
             <div className="max-w-md w-full text-3xl font-bold flex justify-center mb-2 ">
-                    {type === "signin" ? "Log In" : "Create an Account"}
+                    {type === "signin" ? "Sign In" : "Create an Account"}
             </div>
             <div className="text-slate-500 flex justify-center ">
                     {type === "signin" ? "Don't have an account" : "Already have an account ? "}

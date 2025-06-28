@@ -24,7 +24,7 @@ export const SigninAuth = () => {
             const jwt = response.data.jwt;
 
             localStorage.setItem("token" , jwt);
-            navigate('/Blogs');
+            navigate('/blogs');
         } catch (error) {
             setLoader(false); // Loader disable
             setError(true); // trigger alert 
