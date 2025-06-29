@@ -1,10 +1,16 @@
+import {  useState } from "react";
 import { Avatar } from "./BlogCard"
 import { MediumLogo } from "./MediumLogo"
 import { SquarePen } from 'lucide-react';
 import { Bell } from 'lucide-react';
+import { AccountTab } from "./AccountTab";
+
 
 export const Appbar = () => {
-    return <div className="flex w-screen sm:justify-between px-3 ">
+    const [displayAccountTab , setDisplayAccountTab] = useState(false);
+
+    return <div>
+    <div className="flex w-screen sm:justify-between px-3 ">
                 <div className="flex justify-start py-1 px-1 space-x-1 sm:space-x-2 md:space-x-4 tracking-normal  w-screen sm:w-1/3">
                     <div className=" flex flex-col justify-center px-2 ">
                         <MediumLogo/>
@@ -26,11 +32,16 @@ export const Appbar = () => {
                     <div className=" flex flex-col justify-center  text-base text-slate-500 hover:text-slate-800 flex-none">
                         <Bell/>
                     </div>
-                    <div className=" flex flex-col justify-center  flex-none">
+                    <div className=" flex flex-col justify-center  flex-none " onClick={() => {
+                        setDisplayAccountTab((c) => !c );
+                    }}>
                         <Avatar/>
                     </div>
                 </div>
           </div>
+          {displayAccountTab && <AccountTab/>}
+    </div>
+         
 }
 
 function SearchBox() {

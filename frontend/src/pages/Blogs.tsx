@@ -34,7 +34,7 @@ export const Blogs = () => {
                 </div>
             </div>
              <div className=" lg:col-span-1 mt-2 invisible lg:visible">
-                Staff Pick
+               
             </div>
         </div>
 </div>

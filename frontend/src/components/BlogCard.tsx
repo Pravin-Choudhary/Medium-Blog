@@ -1,4 +1,5 @@
 
+
 interface BlogCardType {
     authorName : string;
     title : string;
@@ -13,7 +14,9 @@ export const BlogCard = ({
     publishedDate,   
 } : BlogCardType) => {
 
-    return <div className="border-b-1 border-slate-200 hover:border-slate-900 pb-4 my-2 flex justify-start flex-wrap max-w-2xl w-full md:max-w-[705px] md:w-full">
+
+
+    return <div className="border-b-1 border-slate-200 hover:border-slate-400 pb-4 my-2 flex justify-start flex-wrap max-w-2xl w-full md:max-w-[705px] md:w-full">
        <div className="flex max-w-3/4 sm:max-w-2/3 md:max-w-1/2 w-fit justify-between items-center p-1 ">
              <div className="flex flex-col justify-center " >
                 <Avatar/>
@@ -47,7 +50,7 @@ export const BlogCard = ({
 }
 
 export function Avatar() {
-    return  <img
+    return  <img 
     src="https://docs.material-tailwind.com/img/face-2.jpg"
     alt="avatar"
     className="relative inline-block h-8 w-8 md:h-9 md:w-9 !rounded-full  object-cover object-center m-1"
