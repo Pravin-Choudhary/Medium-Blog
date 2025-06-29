@@ -1,5 +1,5 @@
 import { type SignupInput } from "@10xcode/medium-common";
-import { useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { AuthHeader } from "./AuthHeader";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
@@ -8,7 +8,21 @@ import { Alert } from "./Alert";
 import Loader from "./Loader";
 
 export const SignupAuth = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+
+    useEffect(() => {
+            axios.get(`${BACKEND_URL}/api/v1/user/me` , {
+                headers : {
+                    Authorization : `Bearer ${localStorage.getItem("token")}`
+                } 
+            }).then((res) => {
+                if(res.data.isLoggedIn) {
+                    navigate("/blogs");
+                } 
+            });
+    },[]);
+
+
     const [error , setError] = useState(false);
     const [loader , setLoader] = useState(false);
     const [postInputs , setPostInputs] = useState<SignupInput>({

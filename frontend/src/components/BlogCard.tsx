@@ -1,3 +1,4 @@
+import { Avatar } from "./Avatar";
 
 
 interface BlogCardType {
@@ -49,13 +50,7 @@ export const BlogCard = ({
     </div>
 }
 
-export function Avatar() {
-    return  <img 
-    src="https://docs.material-tailwind.com/img/face-2.jpg"
-    alt="avatar"
-    className="relative inline-block h-8 w-8 md:h-9 md:w-9 !rounded-full  object-cover object-center m-1"
-  />
-}
+
 
 function Circle() {
     return <div className="rounded-full bg-slate-500 h-1 w-1 "></div>
