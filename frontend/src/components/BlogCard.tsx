@@ -13,9 +13,9 @@ export const BlogCard = ({
     publishedDate,   
 } : BlogCardType) => {
 
-    return <div className="border-b-1 border-slate-200 pb-4 my-2">
-       <div className="flex  max-w-3/4 sm:max-w-2/3 md:max-w-1/2 w-fit justify-between items-center p-1">
-             <div className="flex flex-col justify-center" >
+    return <div className="border-b-1 border-slate-200 pb-4 my-2 flex justify-start flex-wrap md:max-w-xl lg:w-full">
+       <div className="flex max-w-3/4 sm:max-w-2/3 md:max-w-1/2 w-fit justify-between items-center p-1 ">
+             <div className="flex flex-col justify-center " >
                 <Avatar/>
             </div>
             <div className="flex space-x-1 tracking-tight  p-1">
@@ -31,11 +31,11 @@ export const BlogCard = ({
             </div>     
        </div>
 
-        <div className="text-xl font-bold">
+        <div className="text-base md:text-xl font-bold">
                 {title}
         </div> 
 
-        <div className="text-base font-normal text-gray-700">
+        <div className="text-sm md:text-base font-normal text-gray-700">
             {content.length >= 100 ? content.slice(0,100) + "..." : content}
         </div>
 
@@ -46,11 +46,11 @@ export const BlogCard = ({
     </div>
 }
 
-function Avatar() {
+export function Avatar() {
     return  <img
     src="https://docs.material-tailwind.com/img/face-2.jpg"
     alt="avatar"
-    className="relative inline-block h-8 w-8 md:h-10 md:w-10 !rounded-full  object-cover object-center m-1"
+    className="relative inline-block h-8 w-8 md:h-9 md:w-9 !rounded-full  object-cover object-center m-1"
   />
 }
 
