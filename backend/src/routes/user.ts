@@ -1,16 +1,45 @@
 import { Hono } from 'hono';
-import { PrismaClient } from '@prisma/client/edge';
+import {  Prisma, PrismaClient } from '@prisma/client/edge';
 import { withAccelerate } from '@prisma/extension-accelerate';
-import { sign } from 'hono/jwt'
+import { sign ,verify } from 'hono/jwt'
 import { signinInput , signupInput } from '@10xcode/medium-common';
+
+type JwtPayLoad = {
+    id : number;
+}
 
 const userRoute = new Hono<{
     Bindings : {
         DATABASE_URL : string;
         JWT_SECRET : string;
+    },
+      Variables : {
+        userId : number
     }
 }>();
 
+userRoute.use('/me' , async(c , next) => {
+  try {
+    
+    const header = c.req.header("Authorization") || "";
+    const token = header.split(" ")[1];
+    const response  = await verify(token , c.env.JWT_SECRET) as JwtPayLoad;
+    
+    if (!response.id) {
+        c.status(401);
+        return c.json({ error: "unauthorized" });
+    }
+
+    c.set('userId' , response.id);
+    await next();
+
+  }catch(error) {
+        c.status(403);
+        return c.json({
+            error : "Invaild Token"
+        });
+  }  
+});
 
 userRoute.post('/signup' ,async (c) => {
     const prisma = new PrismaClient({
@@ -107,6 +136,38 @@ try {
     return c.json({
                 error : "Something Went Wrong"
             });
+}
+});
+
+userRoute.get('/me' , async (c) => {
+try {
+    const prisma = new PrismaClient({
+    datasourceUrl : c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+    
+    const userData = await prisma.user.findUnique({
+        where : {
+            id : c.get('userId')
+        }
+    });
+
+    console.log(userData);
+    
+    return c.json({
+        user : {
+            name : userData?.name,
+            email : userData?.email,
+            userDp : userData?.userDp
+        },
+        isLoggedIn : true
+    });
+    
+} catch (error) {
+    console.log(error);
+        c.status(411);
+        return c.json({
+            error : "Server Error"
+    });
 }
 });
 
