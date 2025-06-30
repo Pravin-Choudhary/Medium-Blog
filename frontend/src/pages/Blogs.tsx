@@ -1,8 +1,13 @@
 import { Appbar } from "../components/Appbar"
 import { BlogCard } from "../components/BlogCard"
+import { BlogSkeleton } from "../components/BlogSkeleton"
 import { CategoryTabs } from "../components/CategoryTabs"
+import { useBlogs } from "../hooks"
 
 export const Blogs = () => {
+  const {blogsLoading , blogs} = useBlogs();
+
+
     return <div>
               <Appbar />
               <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-3 ">
@@ -11,26 +16,19 @@ export const Blogs = () => {
 
                     <CategoryTabs/>
 
-                    <BlogCard
-                    authorName = {"Peter Choudhary"}
-                    title = {"How an Ugly Single-Page Website Makes $5,000 a Month with Affiliate Marketing"}
-                    content = {"No need to create a fancy and modern website with hundreds of pages to make money online. -- Making money online is the dream for man"}
-                    publishedDate = {"Oct 3, 2025"}
-                    />
+                {blogsLoading ? ( Array(4).fill(0).map((_,index) => (
+                          <BlogSkeleton key={index}/>
+                        )) ) : 
+                            (blogs.map((blog) => (
+                            <BlogCard authorName={blog.author.name} 
+                                      title={blog.title}
+                                      content={blog.content}
+                                      key={blog.id}
+                                      userDp={blog.author.userDp}
+                                      publishedDate={"23 Oct,2025"} 
+                            />)
+                      ))}
 
-                    <BlogCard
-                    authorName = {"Peter Choudhary"}
-                    title = {"How an Ugly Single-Page Website Makes $5,000 a Month with Affiliate Marketing"}
-                    content = {"No need to create a fanc w-fully and modern website with hundreds of pages to make money online. -- Making money online is the dream for man"}
-                    publishedDate = {"Oct 3, 2025"}
-                    />
-
-                    <BlogCard
-                    authorName = {"Peter Choudhary"}
-                    title = {"How an Ugly Single-Page Website Makes $5,000 a Month with Affiliate Marketing"}
-                    content = {"No need to create a fancy and modern website with hundreds of pages to make money online. -- Making money online is the dream for man"}
-                    publishedDate = {"Oct 3, 2025"}
-                    />
                 </div>
             </div>
              <div className=" lg:col-span-1 mt-2 invisible lg:visible">
