@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { MultiUserAvatar } from "./MultiUserAvatar";
 
 
@@ -7,6 +8,7 @@ interface BlogCardType {
     content : string;
     publishedDate : string;
     userDp : string | null;
+    blogId : number;
 }
 
 export const BlogCard = ({
@@ -14,13 +16,15 @@ export const BlogCard = ({
     title,
     content,
     publishedDate,  
-    userDp 
+    userDp,
+    blogId
 } : BlogCardType) => {
 
 
 
-    return <div className="border-b-1 border-slate-200 hover:border-slate-400 pb-4 my-2  max-w-2xl w-full md:max-w-[705px] md:w-full cursor-pointer">
-       <div className="flex max-w-3/4 sm:max-w-2/3 md:max-w-1/2 w-fit justify-start items-center">
+    return <Link to={`/blog/${blogId}`}>
+    <div className="border-b-1 border-slate-200 hover:border-slate-400 pb-4 my-2  max-w-2xl w-full md:max-w-[705px] md:w-full cursor-pointer py-6">
+       <div className="flex max-w-3/4 sm:max-w-2/3 md:max-w-1/2 w-fit justify-start items-center mb-3">
              <div className="flex flex-col justify-center" >
                 <MultiUserAvatar userDp={userDp} authorName={authorName}/>
             </div>
@@ -31,25 +35,26 @@ export const BlogCard = ({
                 <div className="flex flex-col justify-center ">
                     <Circle/>
                 </div>
-                <div className="flex font-normal text-slate-500 justify-center flex-col text-[13px] sm:text-base ">
+                <div className="flex font-normal text-slate-500 justify-center flex-col text-[13px] sm:text-sm  tracking-normal">
                     {publishedDate}
                 </div>
             </div>     
        </div>
 
-        <div className="text-[20px] md:text-2xl font-bold md:tracking-tight mb-1 ">
+        <div className="text-[20px] md:text-2xl font-bold md:tracking-tight mb-2">
                 {title}
         </div> 
 
-        <div className="text-[16px] md:text-[18px] md:tracking-tight font-normal text-gray-700 ">
+        <div className="text-[16px] md:text-[18px] md:tracking-tight font-normal text-gray-700 mb-4">
             {content.length >= 100 ? content.slice(0,100) + "..." : content}
         </div>
 
-        <div className=" text-slate-500 text-[14px] mt-1 tracking-tight font-[400] sm:text-base hover:text-slate-900 flex flex-col justify-start">
+        <div className=" text-slate-500 text-[14px] mt-1 tracking-tight font-[400] sm:text-base hover:text-slate-900 flex flex-col justify-start ">
                 {`${Math.ceil(content.length / 100)} min read`}
         </div>
 
     </div>
+</Link>
 }
 
 
