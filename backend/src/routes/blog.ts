@@ -69,7 +69,7 @@ try {
     });
 
     return c.json({
-        id : blog.id
+        postId : blog.id
     });
 
 } catch (error) {
@@ -110,7 +110,7 @@ try {
     });
 
     return c.json({
-        id : updatedBlog.id
+        postId : updatedBlog.id
     });
 
 } catch (error) {
