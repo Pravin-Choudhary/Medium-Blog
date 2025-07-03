@@ -7,8 +7,7 @@ exports.updateBlogInput = exports.createBlogInput = void 0;
 const zod_1 = __importDefault(require("zod"));
 exports.createBlogInput = zod_1.default.object({
     title: zod_1.default.string(),
-    content: zod_1.default.string(),
-    authorID: zod_1.default.number()
+    content: zod_1.default.string()
 });
 exports.updateBlogInput = zod_1.default.object({
     title: zod_1.default.string(),

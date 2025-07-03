@@ -2,15 +2,12 @@ import z from "zod";
 export declare const createBlogInput: z.ZodObject<{
     title: z.ZodString;
     content: z.ZodString;
-    authorID: z.ZodNumber;
 }, "strip", z.ZodTypeAny, {
     title: string;
     content: string;
-    authorID: number;
 }, {
     title: string;
     content: string;
-    authorID: number;
 }>;
 export declare const updateBlogInput: z.ZodObject<{
     title: z.ZodString;

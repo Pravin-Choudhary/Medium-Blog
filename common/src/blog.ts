@@ -1,9 +1,8 @@
-import z from "zod";
+import z, { number } from "zod";
 
 export const createBlogInput = z.object({
     title : z.string(),
-    content : z.string(),
-    authorID : z.number()
+    content : z.string()
 });
 
 export const updateBlogInput = z.object({
