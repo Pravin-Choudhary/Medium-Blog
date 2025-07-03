@@ -114,6 +114,8 @@ try {
     });
 
 } catch (error) {
+    console.log(error);
+    
      c.status(411);
         return c.json({
             message : "Error while updating blog post"

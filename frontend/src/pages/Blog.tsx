@@ -27,7 +27,7 @@ function BlogContent() {
                 </div>) : ( blogLoadable.state == "hasError" ? (<div>
                     <Alert/>
                 </div>) : (
-                    <BlogDeatils authorName={blogLoadable.contents.author.name} userDp={blogLoadable.contents.author.userDp}/>
+                    <BlogDeatils authorName={blogLoadable.contents.author.name} userDp={blogLoadable.contents.author.userDp} title={blogLoadable.contents.title} content={blogLoadable.contents.content}/>
                 ) )}
 
     </div>
