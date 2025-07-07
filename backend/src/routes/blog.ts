@@ -51,6 +51,13 @@ blogRoute.post('/' , async (c) => {
 try {
     const body = await c.req.json();
 
+    if (body.title.length < 1 || body.content.length < 1) {
+        c.status(411);
+        return c.json({
+            message : "Length of Title and content cannot be smaller than 0"
+        });
+    }
+
      const {success} = createBlogInput.safeParse(body);
     
         if(!success){
@@ -73,6 +80,8 @@ try {
     });
 
 } catch (error) {
+    console.log(error);
+    
      c.status(411);
     return c.json({
             message : "Invaild Data creds"
@@ -86,22 +95,36 @@ blogRoute.put('/' ,async (c) => {
     datasourceUrl : c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
-
 try {
-    const body = await c.req.json();
+        const body = await c.req.json();
 
-     const {success} = updateBlogInput.safeParse(body);
+        if (body.title.length < 1 || body.content.length < 1) {
+        c.status(411);
+        return c.json({
+            message : "Length of Title and content cannot be 0 or smaller than 0"
+        });
+    }
+
+    console.log(body);
     
-        if(!success){
+    
+     const response = updateBlogInput.safeParse({
+          title : body.title,
+          content : body.content,
+          id : parseInt(body.id)
+     });
+    
+        if(!response.success){
             c.status(411);
+            console.log(response.error);
             return c.json({
-                message : "Invaild update Inputs"
+                message : "Invaild update Inputs zod issue"
             });
         }
         
     const updatedBlog = await prisma.post.update({
         where : {
-            id : body.id
+            id : parseInt(body.id)
         },
         data :  {
             title : body.title,
