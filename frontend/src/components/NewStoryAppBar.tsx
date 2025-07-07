@@ -3,6 +3,7 @@ import { MediumLogo } from "./MediumLogo";
 import { Avatar } from "./Avatar";
 import { AccountTab } from "./AccountTab";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const NewStoryAppBar = () => {
     const [displayAccountTab , setDisplayAccountTab] = useState(false);
@@ -10,9 +11,11 @@ export const NewStoryAppBar = () => {
     return <div>
     <div className="flex w-screen sm:justify-between px-3 pb-2 border">
                 <div className="flex justify-center py-1 px-1 space-x-1 sm:space-x-2 md:space-x-4 tracking-normal  w-screen sm:w-1/3">
+                <Link to={"/blogs"}>
                     <div className=" flex flex-col justify-center px-2 ">
                         <MediumLogo/>
                     </div>
+                </Link>
                     <div className=" flex flex-col justify-center  px-2  tracking-tight text-[#b3b3b1] font-normal text-base ">
                          Draft in Pravin
                     </div>

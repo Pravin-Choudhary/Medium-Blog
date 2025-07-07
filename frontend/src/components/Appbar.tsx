@@ -6,21 +6,25 @@ import { Bell } from 'lucide-react';
 import { AccountTab } from "./AccountTab";
 import { Avatar } from "./Avatar";
 import { Link } from "react-router-dom";
+import { useAvatar } from "../hooks";
 
 type AppbarProps = {
   blogType: "update" | "create";
   id ?: number | string;
+  authorId ?: string;
 };
 
-export const Appbar = ({blogType , id} : AppbarProps) => {
+export const Appbar = ({blogType , id , authorId} : AppbarProps) => {
     const [displayAccountTab , setDisplayAccountTab] = useState(false);
-
+    const {userData} = useAvatar();
     return <div>
     <div className="flex w-screen sm:justify-between px-3 border-b border-b-slate-200 pb-2">
                 <div className="flex justify-start py-1 px-1 space-x-1 sm:space-x-2 md:space-x-4 tracking-normal  w-screen sm:w-1/3">
+                <Link to={"/blogs"}>
                     <div className=" flex flex-col justify-center px-2 ">
                         <MediumLogo/>
                     </div>
+                </Link>
                     <div className=" flex flex-col justify-center  px-2 ">
                          <SearchBox/>
                     </div>
@@ -28,7 +32,8 @@ export const Appbar = ({blogType , id} : AppbarProps) => {
 
                 <div className="flex justify-end p-1 space-x-3 sm:space-x-8 md:space-x-10 tracking-normal  px-2 w-1/3 sm:w-1/3">
                     <div className="flex flex-col justify-center">
-                        {blogType === "create" ? (
+                    {authorId == userData.userID ? (
+                        blogType === "create" ? (
                                 <Link to={"/new-story"}>
                                     <div className=" flex justify-center  sm:space-x-1 md:space-x-2 text-base text-slate-500 hover:text-slate-800 invisible sm:visible shrink">
 
@@ -53,8 +58,19 @@ export const Appbar = ({blogType , id} : AppbarProps) => {
                                                 Edit
                                             </div>
                                     </div>
-                            </Link>
-                        )}
+                            </Link>) ) : (<Link to={"/new-story"}>
+                                    <div className=" flex justify-center  sm:space-x-1 md:space-x-2 text-base text-slate-500 hover:text-slate-800 invisible sm:visible shrink">
+
+                                            <div className="flex flex-col justify-center font-thin">
+                                                <SquarePen/>
+                                            </div> 
+                                            
+                                            <div className="flex flex-col justify-center">
+                                                Write
+                                            </div>
+                                    </div>
+                            </Link>) }
+
                     </div>
                     <div className=" flex flex-col justify-center  text-base text-slate-500 hover:text-slate-800 flex-none">
                         <Bell/>

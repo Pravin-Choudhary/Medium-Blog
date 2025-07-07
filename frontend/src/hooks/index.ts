@@ -17,6 +17,7 @@ interface UserDataType {
         name : string | null;
         email : string;
         userDp : string | null;
+        userID : string;
 }
 
 export const useBlogs = () => {
@@ -48,7 +49,8 @@ export const useAvatar = () => {
     const [userData , setUserData] = useState<UserDataType>({
         email : "",
         name : "",
-        userDp : ""
+        userDp : "",
+        userID : "",
     });
 
     useEffect(() => {

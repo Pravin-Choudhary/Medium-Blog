@@ -18,7 +18,7 @@ export const SignupAuth = () => {
             }).then((res) => {
                 if(res.data.isLoggedIn) {
                     navigate("/blogs");
-                } 
+                }
             });
     },[]);
 
@@ -52,8 +52,7 @@ export const SignupAuth = () => {
                                 
                                 {loader && <div className="absolute top-0 left-0  flex items-center h-screen w-screen md:w-1/2 justify-center z-50">
                                             <Loader text="loading"/>
-                                         </div>}
-                                
+                                         </div>}                          
 
                                 {error && <Alert errorText="Email Already Taken or Exists."/>}
 

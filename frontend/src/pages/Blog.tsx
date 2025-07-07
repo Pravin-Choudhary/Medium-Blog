@@ -8,6 +8,7 @@ import { BlogDetailSkeleton } from "../components/BlogDetailSkeleton";
 
 
 
+
 export const Blog = () => {
  return <RecoilRoot>
     <BlogContent/>
@@ -20,7 +21,7 @@ function BlogContent() {
     const blogLoadable = useRecoilValueLoadable(blogAtomFamily(id!));
     
     return  <div className="space-y-8 md:space-y-12 lg:space-y-20">
-                 <Appbar blogType="update" id={id}/>
+                 <Appbar blogType="update" id={id} authorId={blogLoadable.contents.authorID}/>
 
                 { blogLoadable.state == "loading" ? (<div>
                     <BlogDetailSkeleton/>
