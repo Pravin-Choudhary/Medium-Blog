@@ -53,7 +53,7 @@ export const SigninAuth = () => {
                                             <Loader text="verifing"/>
                                          </div>}
                                 
-                                {error && <Alert/>}
+                                {error && <Alert errorText="Invaild email or password field."/>}
 
                                 <AuthHeader type="signin"/>
 

@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@10xcode/medium-common": "^1.0.2",
+    "@10xcode/medium-common": "^1.1.0",
     "@tailwindcss/vite": "^4.1.11",
     "axios": "^1.10.0",
     "lucide-react": "^0.525.0",

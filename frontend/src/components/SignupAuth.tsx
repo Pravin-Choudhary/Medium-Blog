@@ -55,7 +55,7 @@ export const SignupAuth = () => {
                                          </div>}
                                 
 
-                                {error && <Alert/>}
+                                {error && <Alert errorText="Email Already Taken or Exists."/>}
 
                                 <AuthHeader type="signup" />
 

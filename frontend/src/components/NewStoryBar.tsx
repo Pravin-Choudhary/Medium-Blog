@@ -1,4 +1,5 @@
-import { Avatar } from "./BlogCard"
+import { Avatar } from "./Avatar"
+
 
 export const NewStoryBar = () => {
     return <div className="flex justify-between px-20">

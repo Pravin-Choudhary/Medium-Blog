@@ -20,12 +20,12 @@ function BlogContent() {
     const blogLoadable = useRecoilValueLoadable(blogAtomFamily(id!));
     
     return  <div className="space-y-8 md:space-y-12 lg:space-y-20">
-                 <Appbar/>
+                 <Appbar blogType="update" id={id}/>
 
                 { blogLoadable.state == "loading" ? (<div>
                     <BlogDetailSkeleton/>
                 </div>) : ( blogLoadable.state == "hasError" ? (<div>
-                    <Alert/>
+                    <Alert errorText="Unable to get blog Data"/>
                 </div>) : (
                     <BlogDeatils authorName={blogLoadable.contents.author.name} userDp={blogLoadable.contents.author.userDp} title={blogLoadable.contents.title} content={blogLoadable.contents.content}/>
                 ) )}

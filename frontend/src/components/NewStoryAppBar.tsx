@@ -20,7 +20,7 @@ export const NewStoryAppBar = () => {
 
                 <div className="flex justify-center p-1 space-x-3 sm:space-x-8 md:space-x-10 tracking-normal  px-2 w-1/3 sm:w-1/3">
                     <div className=" flex flex-col justify-center">
-                        <button type="button" className="focus:outline-none text-white bg-green-800 hover:bg-green-900 focus:ring-4 focus:ring-green-400 font-medium rounded-2xl text-sm px-3 py-1  dark:bg-green-700 dark:hover:bg-green-800 dark:focus:ring-green-900">Publish</button>                                                                   
+                        <button type="button" className="focus:outline-none text-white bg-green-800 hover:bg-green-900 focus:ring-4 focus:ring-green-400 font-medium rounded-2xl text-sm px-3 py-1  dark:bg-green-700 dark:hover:bg-green-800 dark:focus:ring-green-900">New</button>                                                                   
                     </div>
                     <div className=" flex flex-col justify-center  text-base text-slate-500 hover:text-slate-800 flex-none">
                         <Bell/>

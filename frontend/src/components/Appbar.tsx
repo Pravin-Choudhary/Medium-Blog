@@ -7,8 +7,12 @@ import { AccountTab } from "./AccountTab";
 import { Avatar } from "./Avatar";
 import { Link } from "react-router-dom";
 
+type AppbarProps = {
+  blogType: "update" | "create";
+  id ?: number | string;
+};
 
-export const Appbar = () => {
+export const Appbar = ({blogType , id} : AppbarProps) => {
     const [displayAccountTab , setDisplayAccountTab] = useState(false);
 
     return <div>
@@ -24,7 +28,8 @@ export const Appbar = () => {
 
                 <div className="flex justify-end p-1 space-x-3 sm:space-x-8 md:space-x-10 tracking-normal  px-2 w-1/3 sm:w-1/3">
                     <div className="flex flex-col justify-center">
-                            <Link to={"/new-story"}>
+                        {blogType === "create" ? (
+                                <Link to={"/new-story"}>
                                     <div className=" flex justify-center  sm:space-x-1 md:space-x-2 text-base text-slate-500 hover:text-slate-800 invisible sm:visible shrink">
 
                                             <div className="flex flex-col justify-center font-thin">
@@ -36,6 +41,20 @@ export const Appbar = () => {
                                             </div>
                                     </div>
                             </Link>
+                        ) : (
+                                <Link to={`/update-story/${id}`}>
+                                    <div className=" flex justify-center  sm:space-x-1 md:space-x-2 text-base text-slate-500 hover:text-slate-800 invisible sm:visible shrink">
+
+                                            <div className="flex flex-col justify-center font-thin">
+                                                <SquarePen/>
+                                            </div> 
+                                            
+                                            <div className="flex flex-col justify-center">
+                                                Edit
+                                            </div>
+                                    </div>
+                            </Link>
+                        )}
                     </div>
                     <div className=" flex flex-col justify-center  text-base text-slate-500 hover:text-slate-800 flex-none">
                         <Bell/>

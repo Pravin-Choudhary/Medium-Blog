@@ -9,7 +9,7 @@ export const Blogs = () => {
 
 
     return <div>
-              <Appbar />
+              <Appbar blogType="create"/>
               <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-3 ">
                 <div className="flex justify-center w-full p-2  col-span-1 lg:col-span-2  border-r border-r-slate-200">
                   <div className=" p-2 sm:px-2 sm:p-3 flex flex-col justify-center md:max-w-[680px] lg:max-w-[705px] w-full mt-5">
