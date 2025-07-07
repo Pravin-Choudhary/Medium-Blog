@@ -6,7 +6,7 @@ export const blogAtomFamily = atomFamily({
     key : "blogAtomFamily",
     default : selectorFamily({
         key : "blogSelectorFamily",
-        get : (id : string) => async ({get}) => {
+        get : (id : string) => async () => {
             const response = await axios.get(`${BACKEND_URL}/api/v1/blog/${id}` , {
                 headers : {
                     Authorization : `Bearer ${localStorage.getItem("token")}`
